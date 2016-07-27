@@ -1,0 +1,29 @@
+<% cid = @show_id %>
+$(document).ready(function(){
+  //$("<%= "#show_div_id_#{cid}" %>").html("<%= escape_javascript(render('former')) %>").toggle();
+
+  var link_val = $("<%= "##{cid}" %>").text();
+  //alert(link_val);
+
+  if(link_val != null && link_val=='-') {
+    $("<%= "##{cid}" %>").text('+');
+    $("<%= "#show_div_id_#{cid}" %>").html("<%= escape_javascript(render('former')) %>").toggle();
+
+  }else if(link_val != null){
+    $("<%= "#show_div_id_#{cid}" %>").html("<%= escape_javascript(render('former')) %>").toggle();
+    $("<%= "##{cid}" %>").text('-');
+  }
+  //$("<%= "#show_div_id_#{cid}" %>").html("<%= escape_javascript(render('former')) %>").toggle();
+
+
+  //$("a[data_remote]").click(function() {
+   // $("#show_div_id").html("<%#= escape_javascript(render('former')) %>");
+
+
+   // alert("load1");
+    //$("<%= "#show_div_id_#{cid}" %>").html("<%= escape_javascript(render('former')) %>");
+    //alert("load");
+  //});
+});
+
+

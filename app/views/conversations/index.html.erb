@@ -1,0 +1,96 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Conversations</h1>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>ID</th>
+      <th>creator</th>
+      <th>Conversation Context</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% i = 0 %>
+  <% if @topic.nil? %>
+  <% else %>
+    <% @topic.conversations.each do |conversation| %>
+      <tr>
+        <td><%= link_to '-', topic_conversation_show_posts_link_path(@topic.id,conversation.id),remote:true,id: conversation.id %></td>
+        <td><%= conversation.id %></td>
+        <td><%= conversation.user.name %></td>
+        <td><%= conversation.context %></td>
+        <td>
+          <span>
+            <%= link_to 'Show', topic_conversation_path(@topic,conversation)  %> |
+            <% if !@current_user.nil? && @current_user.id == conversation.user_id %>
+               <%= link_to 'Edit', edit_topic_conversation_path(@topic,conversation) %> |
+                <%= link_to 'Destroy', topic_conversation_path(@topic,conversation), method: :delete, data: { confirm: 'Are you sure?' } %> |
+            <% else %>
+                <%= link_to '', '#' %>
+                <%= link_to '', '#' %>
+            <% end %>
+            <%= link_to 'view posts',  topic_conversation_posts_path(@topic.id,conversation.id) %> |
+            <%= link_to 'add post', new_topic_conversation_post_path(@topic.id,conversation.id) %>
+          </span>
+        </td>
+
+        <!--
+          <div id = "show_div_id" >
+            <%#= render 'former' %>
+          </div>
+         -->
+      </tr>
+      <tr>
+        <td colspan = "0.2"></td>
+        <td colspan = "5">
+        <div id="<%= "show_div_id_#{conversation.id}" %>">
+
+        </div>
+        </td>
+      </tr>
+   <% end %>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Conversation', new_topic_conversation_path(@topic.id) %> |
+<%= link_to 'back', topics_path %>
+
+
+<%= javascript_tag do %>
+    var num = 0;
+    $(document).ready(function(){
+    $("#showPostsLink_1").click(function(){
+    var ol_style = $("#postId").attr("style");
+    var showPostsLink_text = $("#showPostsLink").text();
+    if(ol_style != null && ol_style == "display: none;") {
+    $("#showPostsLink").text('-');
+    } else {
+    $("#showPostsLink").text('+');
+    }
+    $("#post_div_1").toggle();
+
+    });
+    });
+
+    $(document).ready(function(){
+    $("#showPostsLink_2").click(function(){
+    var ol_style = $("#postId").attr("style");
+    var showPostsLink_text = $("#showPostsLink").text();
+    if(ol_style != null && ol_style == "display: none;") {
+    $("#showPostsLink").text('-');
+    } else {
+    $("#showPostsLink").text('+');
+    }
+    $("#post_div_2").toggle();
+
+    });
+    });
+
+<% end%>

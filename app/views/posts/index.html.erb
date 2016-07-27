@@ -1,0 +1,87 @@
+<p id="notice"><%= notice %></p>
+<h2>The Conversation Info :</h2>
+<table class="table table-bordered">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Creator</th>
+    <th>Conversation Context</th>
+  </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><%= @conversation.id %></td>
+        <td><%= @conversation.user.name %></td>
+        <td colspan="3"><%= @conversation.context %></td>
+      </tr>
+  </tbody>
+</table>
+
+
+<h2>The Conversation's Posts as follows :</h2>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th><%= link_to '-', topic_conversation_getPosts_path(@conversation.topic_id,@conversation.id), id:"link" %></th>
+      <th>Creator</th>
+      <th>Post Context</th>
+      <th colspan="3">Action</th>
+    </tr>
+  </thead>
+
+  <tbody id= "postlist" >
+  <% i = 0 %>
+  <% if @conversation.nil? %>
+  <% else %>
+    <% @conversation.posts.each do |post| %>
+      <tr>
+        <td><%= i=i+1 %></td>
+        <td><%= post.user.name %></td>
+        <td><%= post.context %></td>
+        <td>
+          <span>
+            <%= link_to 'Show', topic_conversation_post_path(@conversation.topic_id,@conversation.id,post.id) %>
+            <% if !@current_user.nil? && @current_user.id == post.user_id %>
+                <%= ' | ' %>
+                <%= link_to 'Edit', edit_topic_conversation_post_path(@conversation.topic_id,@conversation.id,post.id) %> |
+                <%= link_to 'Destroy', topic_conversation_post_path(@conversation.topic_id,@conversation.id,post.id), method: :delete, data: { confirm: 'Are you sure?' } %>
+            <% else %>
+                <%= link_to '', '#' %>
+                <%= link_to '', '#' %>
+            <% end %>
+          </span>
+        </td>
+
+
+      </tr>
+    <% end %>
+      <% end %>
+  </tbody>
+</table>
+
+<%= javascript_tag do %>
+
+    $(document).ready(function(){
+    $("#link").click(function(e){
+          e.preventDefault();
+          var table_style = $("#postlist").attr("style");
+          var link_text = $("#link").text();
+          if(table_style != null && table_style == "display: none;") {
+            $("#link").text('-');
+          } else {
+            $("#link").text('+');
+          }
+          $("#postlist").toggle();
+
+    });
+    });
+
+<% end%>
+
+
+<br>
+
+<%= link_to 'New Post', new_topic_conversation_post_path(@conversation.topic_id,@conversation.id) %> |
+<%= link_to 'Back', topic_conversations_path(@conversation.topic_id) %></br>
+<%#= link_to 'getPosts', topic_conversation_getPosts_path(@conversation.topic_id,@conversation.id), remote:true,id:"link" %>
+

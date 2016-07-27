@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Topics</h1>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Creator</th>
+      <th>Topic Content</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% i = 0 %>
+    <% @topics.each do |topic| %>
+      <tr>
+        <td><%= i+i+1 %></td>
+        <td><%= topic.user.name %></td>
+        <td><%= topic.term %></td>
+        <td>
+          <span>
+            <%= link_to 'Show', topic %> |
+            <% if !@current_user.nil? && @current_user.id == topic.user_id %>
+                <%= link_to 'Edit', edit_topic_path(topic) %> |
+                <%= link_to 'Destroy', topic, method: :delete, data: { confirm: 'Are you sure?' } %> |
+            <% else %>
+                <%= link_to '', '#' %>
+                <%= link_to '', '#' %>
+            <% end %>
+            <%= link_to 'view conversations', topic_conversations_path(topic.id) %> |
+            <%= link_to 'add conversations', new_topic_conversation_path(topic.id) %>
+          </span>
+        </td>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Topic', new_topic_path %>
+

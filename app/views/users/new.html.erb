@@ -1,0 +1,23 @@
+<% provide(:title, 'Sign up') %>
+<h1>Sign up</h1>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@user, url: signup_path) do |f| %>
+
+        <%= render 'shared/error_messages' %>
+
+        <%= f.label :name %>
+        <%= f.text_field :name, class: 'form-control', placeholder: 'User Name' %>
+        <%= f.label :email %>
+        <%= f.email_field :email, class: 'form-control',placeholder: 'Email Address'%>
+        <%= f.label ' Make sure you use an email you can access.', id: 'explanation1' %>
+        <%= f.label :password %>
+        <%= f.password_field :password, class: 'form-control', placeholder: 'Password'  %>
+        <%= f.label ' Must contain at least 6 characters.', id: 'explanation2' %>
+        <%= f.label :password_confirmation, "Confirmation" %>
+        <%= f.password_field :password_confirmation, class: 'form-control',placeholder: 'Confirm Password' %>
+        <%= f.submit "Create my account", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
+

@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h2>The Topic Detail : </h2>
+
+<table class="table table-striped table-bordered">
+  <tr>
+    <th>ID</th>
+    <td><%= @topic.id %></td>
+  </tr>
+  <tr>
+    <th >Creator</th>
+    <td><%= @topic.user.name %></td>
+  </tr>
+  <tr>
+    <th >Topic Content</th>
+    <td><%= @topic.term %></td>
+  </tr>
+  <tr>
+    <th >Create Time</th>
+    <td><%= @topic.created_at %></td>
+  </tr>
+</table>
+
+<% if !@current_user.nil? && @current_user.id == @topic.user_id %>
+  <%= link_to 'Edit', edit_topic_path(@topic) %>
+<% else %>
+  <%= link_to '', '#' %>
+<% end %>
+<%= link_to 'Back', topics_path %>
+
+
+
+

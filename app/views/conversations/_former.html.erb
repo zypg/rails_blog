@@ -1,0 +1,38 @@
+<table class="table">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Creator</th>
+    <th>Post Context</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% i = 0 %>
+  <% if @posts.nil? %>
+  <% else %>
+      <% @posts.each do |post| %>
+          <tr>
+            <td><%= post.id %></td>
+            <td><%= post.user.name %></td>
+            <td><%= post.context %></td>
+            <td>
+          <span>
+            <%= link_to 'Show', topic_conversation_post_path(@conversation.topic_id,@conversation.id,post.id) %>
+            <% if !@current_user.nil? && @current_user.id == post.user_id %>
+                <%= ' | ' %>
+                <%= link_to 'Edit', edit_topic_conversation_post_path(@conversation.topic_id,@conversation.id,post.id) %> |
+                <%= link_to 'Destroy', topic_conversation_post_path(@conversation.topic_id,@conversation.id,post.id), method: :delete, data: { confirm: 'Are you sure?' } %>
+            <% else %>
+                <%= link_to '', '#' %>
+                <%= link_to '', '#' %>
+            <% end %>
+          </span>
+            </td>
+
+          </tr>
+      <% end %>
+      <% end%>
+  </tbody>
+</table>
